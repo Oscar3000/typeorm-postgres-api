@@ -1,0 +1,16 @@
+version: "3"
+services: 
+    api:
+        build: 
+            context: .
+            dockerfile: ./infra/Dockerfile
+        ports: 
+            - "5000:5000"
+        depends_on: 
+            - db
+    db:
+        image: postgres
+        restart: always
+        environment: 
+            # Pull node variables from .env file
+            POSTGRES_PASSWORD: "password"
