@@ -27,8 +27,8 @@ class UserController {
     static createUser = async (req: Request, res: Response) => {
         //get parameters from body
         let { firstname, lastname, username, password, age } = req.body;
-        if(!(firstname && password)){
-            res.status(400).send({ error: "firstname and password must not be empty" });
+        if(!(username && password)){
+            res.status(400).send({ error: "username and password must not be empty" });
             return
         }
         let user = new User();
