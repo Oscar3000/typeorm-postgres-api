@@ -5,13 +5,17 @@ import {
   CreateDateColumn,
   UpdateDateColumn
 } from "typeorm";
-import { Length } from "class-validator";
+import { Length, IsNotEmpty } from "class-validator";
 import * as bcryptjs from "bcryptjs";
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn("uuid")
   id: string;
+
+  @Column({ type: "text", unique: true })
+  @IsNotEmpty()
+  userName: string;
 
   @Column({ type: "text" })
   firstName: string;

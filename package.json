@@ -24,6 +24,8 @@
    },
    "scripts": {
       "start": "ts-node src/index.ts",
+      "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
+      "migration:generate": "typeorm migration:generate",
       "build": "tsc -p"
    }
 }
