@@ -1,10 +1,10 @@
 import "reflect-metadata";
-import * as express from "express";
-import * as cors from "cors";
-import * as helmet from "helmet";
+import express from "express";
+import cors from "cors";
+import helmet from "helmet";
 import * as bodyParser from "body-parser";
 import {createConnection} from "typeorm";
-import {User} from "./entity/User";
+// import {User} from "./entity/User";
 import routes from "./routes";
 
 createConnection().then(async connection => {
@@ -13,6 +13,7 @@ createConnection().then(async connection => {
 
     app.use(cors());
     app.use(helmet());
+    app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
 
 

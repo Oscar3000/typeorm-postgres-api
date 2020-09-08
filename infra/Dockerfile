@@ -12,8 +12,8 @@ COPY . .
 
 RUN yarn install 
 
-COPY ./infra/entrypoint.sh ./
+#COPY ./infra/entrypoint.sh ./
 
-RUN chmod +x ./entrypoint.sh
-CMD ["/bin/bash", "./entrypoint.sh", "db:5432", "--", "yarn", "start"]
+#RUN chmod +x ./infra/entrypoint.sh
+CMD ["/bin/bash", "./infra/entrypoint.sh", "db:5432", "--", "yarn", "dev"]
 

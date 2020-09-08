@@ -6,6 +6,10 @@ services:
             dockerfile: ./infra/Dockerfile
         ports: 
             - "5000:5000"
+        volumes:
+            # Constantly (consistent strategy) sync `assets/` folder between
+            # container and host
+            - ".:/app:consistent"
         depends_on: 
             - db
     db:
