@@ -2,7 +2,7 @@
    "type": "postgres",
    "host": "db",
    "port": 5432,
-   "username": "user",
+   "username": "postgres",
    "password":"password",
    "synchronize": true,
    "logging": false,
