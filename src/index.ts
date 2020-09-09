@@ -1,5 +1,7 @@
 import "reflect-metadata";
 import express from "express";
+import swaggerUI from "swagger-ui-express";
+import { swaggerDocument } from "./swagger/swagger";
 import cors from "cors";
 import helmet from "helmet";
 import * as bodyParser from "body-parser";
@@ -15,6 +17,7 @@ createConnection().then(async connection => {
     app.use(helmet());
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
+    app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 
     //Set all routes from routes folder
