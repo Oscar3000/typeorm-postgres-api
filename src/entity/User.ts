@@ -5,7 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { Length, IsNotEmpty } from "class-validator";
+import { IsNotEmpty } from "class-validator";
 import * as bcryptjs from "bcryptjs";
 
 @Entity()
@@ -26,8 +26,7 @@ export class User {
   @Column({ type: "int" })
   age: number;
 
-  @Column({ select: false })
-  @Length(4, 20)
+  @Column()
   password: string;
 
   @Column()
