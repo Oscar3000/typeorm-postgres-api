@@ -1,3 +1,4 @@
+import { changePassword, loginUser } from "./auth.swagger";
 import { getUsers, createUser, getUser, editUser, deleteUser } from "./users.swagger";
 export const swaggerDocument = {
     openapi: '3.0.1',
@@ -45,6 +46,12 @@ export const swaggerDocument = {
             "get": getUser,
             "patch": editUser,
             "delete": deleteUser
+        },
+        "/auth/login": {
+            "post": loginUser
+        },
+        "/auth/changePassword": {
+            "post": changePassword
         }
     }
 }

@@ -18,3 +18,7 @@ services:
         environment: 
             # Pull node variables from .env file
             POSTGRES_PASSWORD: "password"
+        depends_on: 
+            - redis
+    redis:
+        image: redis

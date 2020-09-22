@@ -1,4 +1,4 @@
-const response = {
+export const response = {
   User: {
     type: "object",
     required: ["username", "password"],
@@ -207,7 +207,7 @@ export const deleteUser = {
   produces: ["application/json"],
   responses: {
     "204": {
-      description: "user successfully updated",
+      description: "user successfully deleted",
       content: {
         "application/json": {
           schema: {

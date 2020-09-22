@@ -23,7 +23,7 @@ createConnection().then(async connection => {
     app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
     const RedisStore = connectRedis(session);
-    const redisClient = redis.createClient();
+    const redisClient = redis.createClient({ host: "redis" });
 
     app.use(
         session({
