@@ -8,6 +8,9 @@ import * as bodyParser from "body-parser";
 import {createConnection} from "typeorm";
 // import {User} from "./entity/User";
 import routes from "./routes";
+import session from "express-session";
+import redis from "redis";
+import connectRedis from "connect-redis";
 
 createConnection().then(async connection => {
 
@@ -19,6 +22,24 @@ createConnection().then(async connection => {
     app.use(bodyParser.json());
     app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
+    const RedisStore = connectRedis(session);
+    const redisClient = redis.createClient();
+
+    app.use(
+        session({
+            name: "qid",
+            store: new RedisStore({ client: redisClient }),
+            cookie: {
+                maxAge: 1000 * 60 * 24 * 2, // two days
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "lax", //csrf
+            },
+            secret: 'gdvgdvfvdvfdvefnnumwurr',
+            resave: false,
+            saveUninitialized: false
+        })
+    );
 
     //Set all routes from routes folder
     app.use("/", routes);
