@@ -41,11 +41,15 @@ class AuthController {
 
     res.send({ user: UserResult(user) });
   };
+  static logout = async (req: Request, res: Response) => {
+    req.session!.destroy((err) => {
+      if(err){
+        console.log("error occured while removing session", err);
+      }
+    });
+    res.status(200).send({ message: "user has been logged out"});
+  };
   static changePassword = async (req: Request, res: Response) => {
-    if (!req.session!.userId) {
-      res.status(401).send({ error: "pls login and try again." });
-      return;
-    }
     //get parameters from the body
     const { oldPassword, newPassword } = req.body;
     if (!(oldPassword && newPassword)) {

@@ -125,3 +125,44 @@ export const changePassword = {
       },
   },
 };
+
+export const logoutUser = {
+    tags: ["Auth"],
+    description: "log the user out",
+    operationId: "logout",
+    security: [],
+    summary: "log the user out.",
+    produces: ["application/json"],
+    responses: {
+      "200": {
+        description: "message from server",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                message: {
+                  type: "string",
+                },
+              },
+            },
+          },
+        },
+      },
+      "401": {
+        description: "unauthorized",
+        content: {
+          "application/json": {
+            schema: {
+                type: "object",
+                properties: {
+                  message: {
+                    type: "string",
+                  },
+                },
+              },
+          },
+        },
+      },
+    },
+  };
