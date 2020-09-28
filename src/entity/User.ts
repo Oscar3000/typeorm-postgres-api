@@ -8,6 +8,13 @@ import {
 import { IsNotEmpty } from "class-validator";
 import * as bcryptjs from "bcryptjs";
 
+
+// enum Role {
+//   Viewer = "viewer",
+//   Admin = "admin",
+//   Author = "author"
+// }
+
 @Entity()
 export class User {
   @PrimaryGeneratedColumn("uuid")
@@ -28,6 +35,12 @@ export class User {
 
   @Column()
   password: string;
+
+  @Column("text", {
+    array: true,
+    default: '{"viewer"}',
+  })
+  roles: string[];
 
   @Column()
   @CreateDateColumn()

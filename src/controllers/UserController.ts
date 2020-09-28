@@ -22,7 +22,6 @@ class UserController {
 
         try {
             user = await userRepository.findOneOrFail(id);
-            user
           } catch (error) {
               res.status(404).send({ message: "User not found", error });
               return;
@@ -77,7 +76,6 @@ class UserController {
         let user: User;
         try {
           user = await userRepository.findOneOrFail(id);
-          user
         } catch (error) {
             res.status(404).send({ message: "User not found", error });
             return;
