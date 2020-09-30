@@ -14,7 +14,7 @@ class UserController {
     static getAll = async (req: Request, res: Response) => {
         //get books from database
         const bookRepository = getRepository(Book);
-        const books = await bookRepository.find();
+        const books = await bookRepository.find({relations: ["author"]});
         res.send(books.map((book:Book) => BookResult(book)));
     }
     static getBookById = async (req: Request, res: Response) => {

@@ -1,4 +1,5 @@
 import { changePassword, loginUser, logoutUser } from "./auth.swagger";
+import { createBook, deleteBook, editBook, getBook, getBooks } from "./books.swagger";
 import { getUsers, createUser, getUser, editUser, deleteUser } from "./users.swagger";
 export const swaggerDocument = {
     openapi: '3.0.1',
@@ -55,6 +56,24 @@ export const swaggerDocument = {
         },
         "/auth/logout": {
             "post": logoutUser
+        },
+        "/book": {
+            "get": getBooks,
+            "post": createBook
+        },
+        "/book/{id}": {
+            parameters: [
+                {
+                    name: "id",
+                    in: "path",
+                    required: true,
+                    description: "Id of the book that we want to find",
+                    type:"string"
+                }
+            ],
+            "get": getBook,
+            "patch": editBook,
+            "delete": deleteBook
         }
     }
 }

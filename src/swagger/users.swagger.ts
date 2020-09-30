@@ -79,7 +79,7 @@ export const getUsers = {
 };
 
 export const getUser = {
-  tags: ["User"],
+  tags: ["Users"],
   description: "Return user by id",
   operationId: "getUser",
   security: [],
@@ -113,7 +113,7 @@ export const getUser = {
 };
 
 export const createUser = {
-  tags: ["User"],
+  tags: ["Users"],
   description: "create a user",
   operationId: "createUser",
   security: [],
@@ -155,7 +155,7 @@ export const createUser = {
 };
 
 export const editUser = {
-  tags: ["User"],
+  tags: ["Users"],
   description: "edit a user",
   operationId: "editUser",
   security: [],
@@ -203,7 +203,7 @@ export const editUser = {
 };
 
 export const deleteUser = {
-  tags: ["User"],
+  tags: ["Users"],
   description: "delete a user",
   operationId: "deleteUser",
   security: [],
