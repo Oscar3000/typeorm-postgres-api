@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { User } from "src/entity/User";
+import { User } from "../entity/User";
 import { getRepository } from "typeorm";
 
 export const checkRole = (roles: Array<string>) => {
@@ -14,9 +14,13 @@ export const checkRole = (roles: Array<string>) => {
       user = await userRepository.findOneOrFail(id);
     } catch (error) {
       res.status(401).send();
+      return;
     }
     //check if the array of authorized roles includes the user's role
-    if(user!.roles.some(role => roles.indexOf(role) > -1)) next();
-    res.status(401).send();
+    if (user!.roles.some((role) => roles.indexOf(role) > -1)) next();
+    else {
+      res.status(401).send();
+      return;
+    }
   };
 };

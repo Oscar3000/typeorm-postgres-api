@@ -2,7 +2,9 @@ import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import { validate } from "class-validator";
 import { omit } from "lodash";
-import { Book } from "src/entity/Book";
+import { Book } from "../entity/Book";
+import { User } from "../entity/User";
+import { Author } from "../entity/Author";
 
 function BookResult(book: Book) {
     return omit(book, ["password"]);
@@ -46,9 +48,37 @@ class UserController {
             return;
         }
 
-        //Try to save. If fails
+        //create or find the Author of the book
+        let author: Author;
+        try {
+           const userRepository = getRepository(User);
+           const user = await userRepository.findOneOrFail(req.session!.userId,{ relations: ["author"]});
+           if(user.author){
+               author = user.author;
+           } else {
+             author = new Author();
+             author.firstName = user.firstName;
+             author.lastName = user.lastName;
+             author.age = user.age;
+             user.author = author;
+
+             //Validate if the user parameters are okay
+             const errors = await validate(user);
+             if (errors.length > 0) {
+               res.status(400).send(errors);
+               return;
+             }
+             await userRepository.save(user);
+           }
+        } catch (error) {
+            res.status(404).send({ message: "User not found", error });
+            return;
+        }
+
+        //Try to save. else fail
         const bookRepository = getRepository(Book);
         try {
+            book.author = author;
             await bookRepository.save(book);
         } catch (error) {
             res.status(409).send({ message: "error occurred. try again later", error });
@@ -65,7 +95,7 @@ class UserController {
         //Get values from body
         const { title, isbn } = req.body;
 
-        //Try to find the user in the database
+        //Try to find the book in the database
         const bookRepository = getRepository(Book);
         let book: Book;
         try {
@@ -85,7 +115,7 @@ class UserController {
             return;
         }
 
-        //try to save the user
+        //try to save the book
         try {
             await bookRepository.save(book);
         } catch (error) {
@@ -109,7 +139,7 @@ class UserController {
             return;
         }
 
-        //delete the user
+        //delete the book
         await bookRepository.delete(id);
         //After all send a 204 (no content, but accepted) response
         res.status(204).send({ book: BookResult(book), message: "user has been deleted" });

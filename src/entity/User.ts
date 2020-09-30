@@ -3,10 +3,11 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
+  UpdateDateColumn, OneToOne, JoinColumn
 } from "typeorm";
 import { IsNotEmpty } from "class-validator";
 import * as bcryptjs from "bcryptjs";
+import { Author } from "./Author";
 
 
 // enum Role {
@@ -49,6 +50,10 @@ export class User {
   @Column()
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToOne(type => Author, { nullable: true, cascade: true})
+  @JoinColumn()
+  author: Author;
 
   hashPassword() {
     this.password = bcryptjs.hashSync(this.password, 8);

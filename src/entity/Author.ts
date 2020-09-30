@@ -24,7 +24,6 @@ import {
     age: number;
 
     @OneToMany(type => Book, book => book.author)
-    books: Book[]
-  
+    books: Book[];
   }
   

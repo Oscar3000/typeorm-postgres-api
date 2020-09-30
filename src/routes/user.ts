@@ -1,5 +1,6 @@
 import { Router } from "express";
 import UserController from "../controllers/UserController";
+import { session } from "../middlewares/sessionMiddleware";
 
 const router = Router();
 
@@ -13,9 +14,9 @@ router.get('/:id', UserController.getUserById);
 router.post("/", UserController.createUser);
 
 //edit one user
-router.patch("/:id", UserController.editUser);
+router.patch("/:id", [session], UserController.editUser);
 
 //Delete one user
-router.delete("/:id", UserController.deleteUser);
+router.delete("/:id", [session], UserController.deleteUser);
 
 export default router;

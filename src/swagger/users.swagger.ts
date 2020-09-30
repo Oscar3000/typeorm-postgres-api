@@ -11,10 +11,6 @@ export const response = {
         type: "string",
         description: "The user's name",
       },
-      password: {
-        type: "string",
-        description: "The user's name",
-      },
       firstname: {
         type: "string",
         description: "user's id",
@@ -26,6 +22,12 @@ export const response = {
       age: {
         type: "number",
       },
+      roles: {
+        type: "array",
+        items: {
+          type: "string"
+        }
+      }
     },
   },
   Users: {},
@@ -130,6 +132,7 @@ export const createUser = {
               password: "password",
               firstname: "test",
               lastname: "test",
+              roles: "",
               age: 25,
             },
           },
@@ -170,6 +173,7 @@ export const editUser = {
               firstname: "test",
               lastname: "test",
               age: 25,
+              roles: "author"
             },
           },
         },

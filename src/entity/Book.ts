@@ -20,7 +20,10 @@ import { Author } from "./Author";
   
     @Column({ type: "int", unique: true })
     isbn: number;
-  
+
+    @Column({ type: "double precision", default: 0})
+    price: number;
+
     @Column()
     @CreateDateColumn()
     createdAt: Date;

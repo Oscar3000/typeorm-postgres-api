@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import { User } from "../entity/User";
 import { validate } from "class-validator";
-import { omit } from "lodash";
+import { omit, uniq } from "lodash";
 
 function UserResult(user: User) {
     return omit(user, ["password"]);
@@ -30,7 +30,7 @@ class UserController {
     }
     static createUser = async (req: Request, res: Response) => {
         //get parameters from body
-        let { firstname, lastname, username, password, age } = req.body;
+        let { firstname, lastname, username, password, age, roles } = req.body;
         if(!(username && password)){
             res.status(400).send({ error: "username and password must not be empty" });
             return
@@ -41,6 +41,11 @@ class UserController {
         user.lastName = lastname;
         user.password = password;
         user.age = age;
+
+        if (!!roles) {
+          const userRoles = roles.split(",").filter((role:string) => !!role);
+          user.roles = userRoles.length ? ["viewer", ...userRoles] : ["viewer"];
+        }
 
         //Validate if the parameters are okay
         const errors = await validate(user);
@@ -69,7 +74,7 @@ class UserController {
         const id = req.params.id;
 
         //Get values from body
-        const { firstname, lastname, age } = req.body;
+        const { firstname, lastname, age, roles } = req.body;
 
         //Try to find the user in the database
         const userRepository = getRepository(User);
@@ -85,6 +90,10 @@ class UserController {
         user.lastName = lastname;
         user.age = age;
 
+        if (!!roles) {
+            const userRoles = roles.split(",").filter((role:string) => !!role);
+            user.roles = uniq([...user.roles, ...userRoles]);
+        }
         //Validate if the parameters are okay
         const errors = await validate(user);
         if(errors.length > 0){
