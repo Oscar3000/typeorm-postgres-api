@@ -10,7 +10,7 @@ function BookResult(book: Book) {
     return omit(book, ["password"]);
 }
 
-class UserController {
+class BookController {
     static getAll = async (req: Request, res: Response) => {
         //get books from database
         const bookRepository = getRepository(Book);
@@ -71,7 +71,7 @@ class UserController {
              await userRepository.save(user);
            }
         } catch (error) {
-            res.status(404).send({ message: "User not found", error });
+            res.status(404).send({ message: "Book not found", error });
             return;
         }
 
@@ -142,8 +142,8 @@ class UserController {
         //delete the book
         await bookRepository.delete(id);
         //After all send a 204 (no content, but accepted) response
-        res.status(204).send({ book: BookResult(book), message: "user has been deleted" });
+        res.status(204).send({ book: BookResult(book), message: "Book has been deleted" });
     }
 }
 
-export default UserController;
+export default BookController;

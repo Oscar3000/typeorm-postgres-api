@@ -1,4 +1,5 @@
 import { changePassword, loginUser, logoutUser } from "./auth.swagger";
+import { deleteAuthor, editAuthor, getAuthor, getAuthors } from "./authors.swagger";
 import { createBook, deleteBook, editBook, getBook, getBooks } from "./books.swagger";
 import { getUsers, createUser, getUser, editUser, deleteUser } from "./users.swagger";
 export const swaggerDocument = {
@@ -74,6 +75,23 @@ export const swaggerDocument = {
             "get": getBook,
             "patch": editBook,
             "delete": deleteBook
+        },
+        "/author": {
+            "get": getAuthors
+        },
+        "/author/{id}": {
+            parameters: [
+                {
+                    name: "id",
+                    in: "path",
+                    required: true,
+                    description: "Id of the author that we want to find",
+                    type:"string"
+                }
+            ],
+            "get": getAuthor,
+            "patch": editAuthor,
+            "delete": deleteAuthor
         }
     }
 }
